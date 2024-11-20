@@ -6,10 +6,33 @@ function Header() {
     <header>
       <div className="navbar mb-5 bg-neutral text-neutral-content">
         <div className="container mx-auto">
-          <div className="flex-1">
+          <div className="flex-none">
             <Link className="btn btn-ghost text-xl" href="/">
               daisyUI
             </Link>
+          </div>
+          <div className="flex-1">
+            <ul className="menu menu-horizontal px-1">
+              <li>
+                <Link href={"/dashboard"}>Dashboard</Link>
+              </li>
+              <li>
+                <Link href={"/expenses"}>Expenses</Link>
+              </li>
+              {/* <li>
+                <details>
+                  <summary>Parent</summary>
+                  <ul className="rounded-t-none bg-base-100 p-2">
+                    <li>
+                      <a>Link 1</a>
+                    </li>
+                    <li>
+                      <a>Link 2</a>
+                    </li>
+                  </ul>
+                </details>
+              </li> */}
+            </ul>
           </div>
           <div className="flex-none gap-2">
             <div className="dropdown dropdown-end">
