@@ -1,24 +1,25 @@
-import { useState, useEffect } from "react";
-import localforage from "localforage";
-
 import { Expense } from "../utils/schema";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
 
-type ExpensesTableProps = {
+export type ExpensesTableProps = {
   expensesData: Expense[];
+  deleteExpense: Function;
+  editExpense: Function;
 };
 
-export default function ExpensesTable({ expensesData }: ExpensesTableProps) {
-  //   const [expenses, setExpenses] = useState<Expense[]>(expensesData);
+export default function ExpensesTable({
+  expensesData,
+  deleteExpense,
+  editExpense,
+}: ExpensesTableProps) {
+  const handleDeleteBtn = (id: string) => {
+    console.log("Delete: " + id);
+  };
 
-  //   useEffect(() => {
-  //     const loadExpenses = async () => {
-  //       const storedExpenses = await localforage.getItem<Expense[]>("expenses");
-  //       if (storedExpenses) setExpenses(storedExpenses);
-  //     };
-  //     loadExpenses();
-  //   }, []);
+  const handleEditBtn = (id: string) => {
+    console.log("Edit: " + id);
+  };
 
   return (
     <>
@@ -62,9 +63,9 @@ export default function ExpensesTable({ expensesData }: ExpensesTableProps) {
                   </tr>
                 </thead>
                 <tbody>
-                  {expensesData.map((expense) => (
+                  {expensesData.map((expense, index) => (
                     <tr key={expense.id}>
-                      <th>1</th>
+                      <th>{index + 1}</th>
 
                       <td>{expense.name}</td>
                       <td>{expense.category}</td>
@@ -75,6 +76,7 @@ export default function ExpensesTable({ expensesData }: ExpensesTableProps) {
                           className="btn btn-error btn-sm"
                           title="Delete"
                           name="Delete"
+                          onClick={() => handleDeleteBtn(expense.id)}
                         >
                           D
                         </button>
@@ -82,6 +84,7 @@ export default function ExpensesTable({ expensesData }: ExpensesTableProps) {
                           className="btn btn-primary btn-sm"
                           title="Edit"
                           name="Edit"
+                          onClick={() => handleEditBtn(expense.id)}
                         >
                           E
                         </button>

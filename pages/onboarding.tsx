@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import localforage from "localforage";
 import { User, EmergencyGoal } from "../utils/schema";
+import Header from "@/components/Header";
 
 const Onboarding = () => {
   const [name, setName] = useState("");
@@ -76,68 +77,74 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className="mb-6 text-3xl font-bold">Onboarding</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-        <div>
-          <label className="mb-2 block font-bold">Name</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={`input input-bordered w-full ${errors.name ? "input-error" : ""}`}
-          />
-          {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
-        </div>
-        <div>
-          <label className="block font-bold">Monthly Income</label>
-          <div className="mb-2 text-sm text-gray-600">
-            Whatever you get after taxes monthly
+    <>
+      <Header />
+
+      <div className="flex min-h-screen flex-col items-center justify-center">
+        <h1 className="mb-6 text-3xl font-bold">Onboarding</h1>
+        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
+          <div>
+            <label className="mb-2 block font-bold">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={`input input-bordered w-full ${errors.name ? "input-error" : ""}`}
+            />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name}</p>
+            )}
           </div>
-          <input
-            type="number"
-            value={income}
-            onChange={(e) => setIncome(e.target.value)}
-            className={`input input-bordered w-full ${errors.income ? "input-error" : ""}`}
-          />
-          {errors.income && (
-            <p className="text-sm text-red-500">{errors.income}</p>
-          )}
-        </div>
-        <div>
-          <label className="block font-bold">
-            Emergency Fund Goal (Months)
-          </label>
-          <div className="mb-2 text-sm text-gray-600">
-            How long will you be able to survive on your emergency fund
+          <div>
+            <label className="block font-bold">Monthly Income</label>
+            <div className="mb-2 text-sm text-gray-600">
+              Whatever you get after taxes monthly
+            </div>
+            <input
+              type="number"
+              value={income}
+              onChange={(e) => setIncome(e.target.value)}
+              className={`input input-bordered w-full ${errors.income ? "input-error" : ""}`}
+            />
+            {errors.income && (
+              <p className="text-sm text-red-500">{errors.income}</p>
+            )}
           </div>
-          <input
-            type="number"
-            value={months}
-            onChange={(e) => setMonths(e.target.value)}
-            className={`input input-bordered w-full ${errors.months ? "input-error" : ""}`}
-          />
-          {errors.months && (
-            <p className="text-sm text-red-500">{errors.months}</p>
-          )}
-        </div>
-        <div>
-          <label className="mb-2 block font-bold">Current Savings</label>
-          <input
-            type="number"
-            value={currentSavings}
-            onChange={(e) => setCurrentSavings(e.target.value)}
-            className={`input input-bordered w-full ${errors.currentSavings ? "input-error" : ""}`}
-          />
-          {errors.currentSavings && (
-            <p className="text-sm text-red-500">{errors.currentSavings}</p>
-          )}
-        </div>
-        <button type="submit" className="btn btn-primary w-full">
-          Start Tracking
-        </button>
-      </form>
-    </div>
+          <div>
+            <label className="block font-bold">
+              Emergency Fund Goal (Months)
+            </label>
+            <div className="mb-2 text-sm text-gray-600">
+              How long will you be able to survive on your emergency fund
+            </div>
+            <input
+              type="number"
+              value={months}
+              onChange={(e) => setMonths(e.target.value)}
+              className={`input input-bordered w-full ${errors.months ? "input-error" : ""}`}
+            />
+            {errors.months && (
+              <p className="text-sm text-red-500">{errors.months}</p>
+            )}
+          </div>
+          <div>
+            <label className="mb-2 block font-bold">Current Savings</label>
+            <input
+              type="number"
+              value={currentSavings}
+              onChange={(e) => setCurrentSavings(e.target.value)}
+              className={`input input-bordered w-full ${errors.currentSavings ? "input-error" : ""}`}
+            />
+            {errors.currentSavings && (
+              <p className="text-sm text-red-500">{errors.currentSavings}</p>
+            )}
+          </div>
+          <button type="submit" className="btn btn-primary w-full">
+            Start Tracking
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

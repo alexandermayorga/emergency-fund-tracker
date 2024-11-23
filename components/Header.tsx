@@ -19,6 +19,9 @@ function Header() {
               <li>
                 <Link href={"/expenses"}>Expenses</Link>
               </li>
+              <li>
+                <Link href={"/onboarding"}>Onboarding</Link>
+              </li>
               {/* <li>
                 <details>
                   <summary>Parent</summary>

@@ -6,6 +6,7 @@ import { Expense } from "../utils/schema";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
 import ExpensesTable from "@/components/ExpensesTable";
+import { deleteExpense } from "@/utils/expenses";
 
 const Expenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -41,6 +42,12 @@ const Expenses = () => {
     setAmount("");
     setCategory("");
     setNecessary(false);
+  };
+
+  const handleDeleteExpense = async (id: string) => {
+    // console.log(id);
+    const updatedExpenses = await deleteExpense(id);
+    setExpenses(updatedExpenses);
   };
 
   return (
@@ -110,7 +117,10 @@ const Expenses = () => {
 
         <div className="">
           <h2 className="mb-4 text-2xl font-bold">Your Expenses</h2>
-          <ExpensesTable expensesData={expenses} />
+          <ExpensesTable
+            expensesData={expenses}
+            deleteExpense={handleDeleteExpense}
+          />
         </div>
       </div>
     </>
