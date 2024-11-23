@@ -28,7 +28,7 @@ With a focus on simplicity and user-friendly design, this app helps users take c
 
 ## 📷 Screenshots
 
-_Add screenshots of your app here once ready._
+_Will Add screenshots of the app here once ready._
 
 ---
 
@@ -43,13 +43,21 @@ cd emergency-fund-tracker
 ```
 
 2.  Install dependencies:
-    `npm install`
+
+```
+npm install
+```
 
 3.  Start the development server:
-    `npm run dev `
+
+    ```
+    npm run dev
+    ```
 
 4.  Open the app in your browser:
-    `http://localhost:3000`
+    ```
+    http://localhost:3000
+    ```
 
 ## 🤝 Contributing
 
