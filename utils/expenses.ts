@@ -45,3 +45,10 @@ export const deleteExpense = async (id: string): Promise<Expense[]> => {
   await localforage.setItem(EXPENSES_KEY, updatedExpenses);
   return updatedExpenses;
 };
+
+// Fetch a single expense by ID
+export const getExpenseById = async (id: string): Promise<Expense | null> => {
+  const expenses = await getExpenses();
+  const expense = expenses.find((expense) => expense.id === id);
+  return expense || null;
+};

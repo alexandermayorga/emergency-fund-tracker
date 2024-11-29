@@ -1,64 +1,54 @@
-import { FormEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import { Expense } from "@/utils/schema";
-import localforage from "localforage";
+import { getExpenseById } from "@/utils/expenses";
 
 export type ExpenseFormProps = {
-  expense?: Expense;
   handleFormSubmit: Function;
-  edit: boolean;
+  editID: string;
+  setEditID: Function;
 };
 
 export const ExpenseForm = ({
-  expense,
   handleFormSubmit,
+  editID,
+  setEditID,
 }: ExpenseFormProps) => {
-  const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [name, setName] = useState(expense ? expense.name : "");
-  const [amount, setAmount] = useState(
-    expense ? expense.amount.toString() : "",
-  );
-  const [category, setCategory] = useState(expense ? expense.category : "");
-  const [necessary, setNecessary] = useState(
-    expense ? expense.necessary : false,
-  );
+  const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [necessary, setNecessary] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    const loadExpenseToEdit = async (id: string) => {
+      const storedExpense = await getExpenseById(id);
+      if (storedExpense) {
+        setName(storedExpense.name);
+        setAmount(storedExpense.amount.toString());
+        setCategory(storedExpense.category);
+        setNecessary(storedExpense.necessary);
+        setEditMode(true);
+      }
+    };
+    if (editID !== "") loadExpenseToEdit(editID);
+  }, [editID]);
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newExpense: Expense = {
-      id: Date.now().toString(),
+    const expense: Expense = {
+      id: editID !== "" ? editID : Date.now().toString(),
       name,
       amount: parseFloat(amount),
       category,
       necessary,
     };
 
-    handleFormSubmit(newExpense, clearForm);
+    handleFormSubmit(expense, clearForm);
   };
 
   const clearForm = () => {
     // // Clear inputs
-    setName("");
-    setAmount("");
-    setCategory("");
-    setNecessary(false);
-  };
-
-  const handleAddExpense = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newExpense: Expense = {
-      id: Date.now().toString(),
-      name,
-      amount: expense ? expense.amount : parseFloat(amount as string),
-      category,
-      necessary,
-    };
-
-    const updatedExpenses = [...expenses, newExpense];
-    setExpenses(updatedExpenses);
-    await localforage.setItem("expenses", updatedExpenses);
-
-    // Clear inputs
     setName("");
     setAmount("");
     setCategory("");
@@ -77,7 +67,7 @@ export const ExpenseForm = ({
     // };
 
     // const updatedExpenses = [...expenses, newExpense];
-    // setExpenses(updatedExpenses);
+    // setExpense(updatedExpenses);
     // await localforage.setItem("expenses", updatedExpenses);
 
     // // Clear inputs
@@ -85,6 +75,12 @@ export const ExpenseForm = ({
     // setAmount("");
     // setCategory("");
     // setNecessary(false);
+  };
+
+  const handleCancelEdit = () => {
+    clearForm();
+    setEditMode(false);
+    setEditID("");
   };
 
   return (
@@ -119,7 +115,6 @@ export const ExpenseForm = ({
           className="input input-bordered w-full rounded"
         />
       </div>
-
       <div className="">
         <label className="mb-2 block text-sm font-medium">Necessary?</label>
         <input
@@ -129,9 +124,24 @@ export const ExpenseForm = ({
           className="checkbox"
         />
       </div>
-      <button type="submit" className="btn btn-neutral col-start-2 w-full">
-        Add Expense
-      </button>
+      {editMode ? (
+        <>
+          <button
+            onClick={handleCancelEdit}
+            type="button"
+            className="btn w-full"
+          >
+            Cancel
+          </button>
+          <button type="submit" className="btn btn-accent col-start-2 w-full">
+            Edit Expense
+          </button>
+        </>
+      ) : (
+        <button type="submit" className="btn btn-neutral col-start-2 w-full">
+          Add Expense
+        </button>
+      )}
     </form>
   );
 };

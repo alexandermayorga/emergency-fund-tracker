@@ -11,11 +11,11 @@ import { ExpenseForm } from "@/components/ExpenseForm";
 
 const Expenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [necessary, setNecessary] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  // const [name, setName] = useState("");
+  // const [amount, setAmount] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [necessary, setNecessary] = useState(false);
+  const [editID, setEditID] = useState("");
 
   useEffect(() => {
     const loadExpenses = async () => {
@@ -25,45 +25,35 @@ const Expenses = () => {
     loadExpenses();
   }, []);
 
-  const handleAddExpense = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newExpense: Expense = {
-      id: Date.now().toString(),
-      name,
-      amount: parseFloat(amount),
-      category,
-      necessary,
-    };
-
-    const updatedExpenses = [...expenses, newExpense];
-    setExpenses(updatedExpenses);
-    await localforage.setItem("expenses", updatedExpenses);
-
-    // Clear inputs
-    setName("");
-    setAmount("");
-    setCategory("");
-    setNecessary(false);
-  };
-
   const handleDeleteExpense = async (id: string) => {
     // console.log(id);
     const updatedExpenses = await deleteExpense(id);
     setExpenses(updatedExpenses);
   };
   const handleEditExpense = async (id: string) => {
-    console.log("Edit: " + id);
-    // const updatedExpenses = await deleteExpense(id);
-    // setExpenses(updatedExpenses);
+    // console.log("Edit: " + id);
+    // pass the expense ID to the form component
+    setEditID(id);
   };
 
-  const handleFormSubmit = async (newExpense: Expense, clearForm: Function) => {
-    console.log(newExpense);
+  const handleFormSubmit = async (expense: Expense, clearForm: Function) => {
+    let updatedExpenses: Expense[];
 
-    const updatedExpenses = [...expenses, newExpense];
+    if (expenses.find((storedExpense) => storedExpense.id === expense.id)) {
+      updatedExpenses = expenses.map((storedExpense) => {
+        if (storedExpense.id !== expense.id) return storedExpense;
+        const updatedExpense = {
+          ...expense,
+          id: storedExpense.id,
+        };
+        return updatedExpense;
+      });
+    } else {
+      updatedExpenses = [...expenses, expense];
+    }
+
     setExpenses(updatedExpenses);
     await localforage.setItem("expenses", updatedExpenses);
-
     clearForm();
   };
 
@@ -79,7 +69,11 @@ const Expenses = () => {
             {/* <NewExpenseForm /> */}
             {/* <ExpenseForm edit expense={expense} /> */}
             {/* <ExpenseForm action={"edit"} expense={expense} /> */}
-            <ExpenseForm handleFormSubmit={handleFormSubmit} edit={editMode} />
+            <ExpenseForm
+              handleFormSubmit={handleFormSubmit}
+              editID={editID}
+              setEditID={setEditID}
+            />
             {/* <br />
             <br /> */}
             {/* <form
