@@ -14,11 +14,13 @@ export default function ExpensesTable({
   editExpense,
 }: ExpensesTableProps) {
   const handleDeleteBtn = (id: string) => {
-    console.log("Delete: " + id);
+    // console.log("Delete: " + id);
+    deleteExpense(id);
   };
 
   const handleEditBtn = (id: string) => {
-    console.log("Edit: " + id);
+    // console.log("Edit: " + id);
+    editExpense(id);
   };
 
   return (

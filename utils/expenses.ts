@@ -1,3 +1,5 @@
+// #TODO ADD ERROR Handlers
+
 import localforage from "localforage";
 
 export type Expense = {
