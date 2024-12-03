@@ -17,7 +17,6 @@ export const ExpenseForm = ({
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [necessary, setNecessary] = useState(false);
-  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     const loadExpenseToEdit = async (id: string) => {
@@ -27,7 +26,6 @@ export const ExpenseForm = ({
         setAmount(storedExpense.amount.toString());
         setCategory(storedExpense.category);
         setNecessary(storedExpense.necessary);
-        setEditMode(true);
       }
     };
     if (editID !== "") loadExpenseToEdit(editID);
@@ -37,7 +35,7 @@ export const ExpenseForm = ({
     e.preventDefault();
 
     const expense: Expense = {
-      id: editID !== "" ? editID : Date.now().toString(),
+      id: editID || Date.now().toString(),
       name,
       amount: parseFloat(amount),
       category,
@@ -55,31 +53,8 @@ export const ExpenseForm = ({
     setNecessary(false);
   };
 
-  const handleEditExpense = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Edit Expense");
-    // const newExpense: Expense = {
-    //   id: Date.now().toString(),
-    //   name,
-    //   amount: expense ? expense.amount : parseFloat(amount as string),
-    //   category,
-    //   necessary,
-    // };
-
-    // const updatedExpenses = [...expenses, newExpense];
-    // setExpense(updatedExpenses);
-    // await localforage.setItem("expenses", updatedExpenses);
-
-    // // Clear inputs
-    // setName("");
-    // setAmount("");
-    // setCategory("");
-    // setNecessary(false);
-  };
-
   const handleCancelEdit = () => {
     clearForm();
-    setEditMode(false);
     setEditID("");
   };
 
@@ -124,7 +99,7 @@ export const ExpenseForm = ({
           className="checkbox"
         />
       </div>
-      {editMode ? (
+      {editID !== "" ? (
         <>
           <button
             onClick={handleCancelEdit}
@@ -145,23 +120,3 @@ export const ExpenseForm = ({
     </form>
   );
 };
-
-/**
- *
- *
- * 2 states: New Form and Update Form
- *
- * control state from parent
- * pass down props
- *
- * New Form
- *
- * Update Form:
- *  needs Expense object
- *
- *
- *
- * if we use the same shell => add if's and thens
- * if we use 2 diff shells => 2 different components to mantain
- *
- */
