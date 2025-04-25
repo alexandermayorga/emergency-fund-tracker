@@ -15,5 +15,6 @@
     "titleBar.inactiveBackground": "#e5671799",
     "titleBar.inactiveForeground": "#15202b99"
   },
-  "peacock.color": "#E56717"
+  "peacock.color": "#E56717",
+  "marquee.widgets.npm-stats.packageNames": ["emergency-fund-tracker"]
 }

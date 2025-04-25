@@ -65,65 +65,6 @@ const Expenses = () => {
               editID={editID}
               setEditID={setEditID}
             />
-            {/* <br />
-            <br /> */}
-            {/* <form
-              onSubmit={handleAddExpense}
-              className="d-none grid w-full grid-cols-2 gap-4 bg-primary"
-            >
-              <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Expense Name
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="input input-bordered w-full rounded"
-                />
-              </div>
-              <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Category
-                </label>
-                <input
-                  type="text"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  required
-                  className="input input-bordered w-full rounded"
-                />
-              </div>
-              <div>
-                <label className="mb-2 block text-sm font-medium">Amount</label>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  required
-                  className="input input-bordered w-full rounded"
-                />
-              </div>
-
-              <div className="">
-                <label className="mb-2 block text-sm font-medium">
-                  Necessary?
-                </label>
-                <input
-                  type="checkbox"
-                  checked={necessary}
-                  onChange={() => setNecessary(!necessary)}
-                  className="checkbox"
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn btn-neutral col-start-2 w-full"
-              >
-                Add Expense
-              </button>
-            </form> */}
           </div>
         </section>
 
