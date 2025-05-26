@@ -3,7 +3,8 @@ import {
   FaPlus,
   FaRegSave,
   FaRegPlusSquare,
-  FaRegQuestionCircle,
+  FaRegTrashAlt,
+  FaEdit,
 } from "react-icons/fa";
 
 import { fakeExpenses } from "../utils/data";
@@ -33,34 +34,44 @@ export default function Tracker() {
                 <tr className="border border-neutral bg-neutral text-lg font-bold text-neutral-content">
                   <th></th>
                   <th className="text-lg">Expenses</th>
+                  <th className="text-lg">Category</th>
                   <th className="text-lg">Monthly Cost</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody className="border">
                 {fakeExpenses.map((expense) => (
-                  <tr className="hover w-4" key={expense.id}>
+                  <tr className="hover w-4 cursor-pointer" key={expense.id}>
                     <th className="w-4">{expense.id}</th>
                     <td>{expense.name}</td>
+                    <td>CATEGORY</td>
                     <td className="text-center">${expense.amount}</td>
+                    <td>
+                      <FaEdit className="text-secondary" />
+                    </td>
                   </tr>
                 ))}
 
                 {/* Expense Edit Mode */}
-                <tr className="w-full">
-                  <td className="" colSpan={3}>
-                    <div className="flex gap-2">
+                <tr className="w-full bg-slate-50">
+                  <td className="" colSpan={5}>
+                    <div className="grid grid-cols-2 gap-2">
                       <input
-                        className="flex-2 input input-bordered w-full"
+                        className="input input-bordered col-span-2 w-full"
                         placeholder="Expense Name"
                         type="text"
                       />
                       <input
-                        className="flex-2 input input-bordered w-full"
+                        className="input input-bordered col-span-2 w-full"
                         placeholder="00.00"
                         type="number"
                       />
-                      <button className="btn btn-accent flex-none">
+                      <button className="btn btn-accent">
                         <FaRegSave /> Save
+                      </button>
+                      <button className="btn btn-error">
+                        <FaRegTrashAlt />
+                        Delete
                       </button>
                     </div>
                   </td>
@@ -71,7 +82,7 @@ export default function Tracker() {
 
                 {/* No Expenses Mode */}
                 <tr className="w-full">
-                  <td className="" colSpan={3}>
+                  <td className="" colSpan={5}>
                     <div className="flex flex-col items-center rounded bg-gray-200 px-2 py-6 text-gray-400">
                       <div className="mb-3 text-2xl">Empty</div>
                       <FaRegPlusSquare className="mb-2 text-2xl" />
@@ -84,7 +95,7 @@ export default function Tracker() {
 
                 {/* Add New Expense */}
                 <tr className="w-full">
-                  <td className="" colSpan={3}>
+                  <td className="" colSpan={5}>
                     <div className="flex gap-2">
                       <button className="btn btn-outline w-full rounded">
                         <FaPlus /> Add New Expense
@@ -99,11 +110,13 @@ export default function Tracker() {
               <tfoot>
                 {/* Total */}
                 <tr className="border border-gray-800 bg-neutral text-lg font-bold text-neutral-content">
-                  <th></th>
+                  <td></td>
                   <td className="text-center">Total</td>
+                  <td></td>
                   <td className="text-center">
                     ${totalExpenses.toLocaleString()}
                   </td>
+                  <td></td>
                 </tr>
               </tfoot>
             </table>
@@ -133,9 +146,12 @@ export default function Tracker() {
             </div>
           </div>
 
-          <div className="mb-4 text-2xl font-bold">
+          <h3 className="mb-2 text-2xl font-bold">
             Monthly Savings: {rangeValue}%
-          </div>
+          </h3>
+          <p className="mb-4 text-gray-500">
+            How much you are planning to set apart for the Emergency Fund
+          </p>
           <input
             type="range"
             min={0}
@@ -145,11 +161,11 @@ export default function Tracker() {
             onChange={(e) => setRangeValue(Number(e.target.value))}
           />
 
-          <div className="stats mb-4 w-full shadow">
+          <div className="stats mb-4 w-full grid-cols-2 shadow">
             <div className="stat text-success">
               <div className="stat-title">Monthly Savings</div>
               <div className="stat-value">$6,000</div>
-              {/* <div className="stat-desc">leftover after your expenses</div> */}
+              <div className="stat-desc">Savings for the Emergency fund</div>
             </div>
             <div className="stat text-primary">
               <div className="stat-title">Total After Savings</div>
