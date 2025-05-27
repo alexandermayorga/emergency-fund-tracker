@@ -9,6 +9,7 @@ import {
 
 import { fakeExpenses } from "../utils/data";
 import { useState } from "react";
+import ExpenseEditForm from "@/components/ExpenseEditForm";
 
 export default function Tracker() {
   const totalExpenses = fakeExpenses.reduce(
@@ -44,7 +45,7 @@ export default function Tracker() {
                   <tr className="hover w-4 cursor-pointer" key={expense.id}>
                     <th className="w-4">{expense.id}</th>
                     <td>{expense.name}</td>
-                    <td>CATEGORY</td>
+                    <td>{expense.category}</td>
                     <td className="text-center">${expense.amount}</td>
                     <td>
                       <FaEdit className="text-secondary" />
@@ -55,29 +56,8 @@ export default function Tracker() {
                 {/* Expense Edit Mode */}
                 <tr className="w-full bg-slate-50">
                   <td className="" colSpan={5}>
-                    <div className="grid grid-cols-2 gap-2">
-                      <input
-                        className="input input-bordered col-span-2 w-full"
-                        placeholder="Expense Name"
-                        type="text"
-                      />
-                      <input
-                        className="input input-bordered col-span-2 w-full"
-                        placeholder="00.00"
-                        type="number"
-                      />
-                      <button className="btn btn-accent">
-                        <FaRegSave /> Save
-                      </button>
-                      <button className="btn btn-error">
-                        <FaRegTrashAlt />
-                        Delete
-                      </button>
-                    </div>
+                    <ExpenseEditForm />
                   </td>
-                  {/* <th>ID</th>
-                  <td>Name</td>
-                  <td className="text-right">$00.00</td> */}
                 </tr>
 
                 {/* No Expenses Mode */}
@@ -102,9 +82,6 @@ export default function Tracker() {
                       </button>
                     </div>
                   </td>
-                  {/* <th>ID</th>
-                  <td>Name</td>
-                  <td className="text-right">$00.00</td> */}
                 </tr>
               </tbody>
               <tfoot>
